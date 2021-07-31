@@ -9,7 +9,7 @@ const io = new Server(server);
 console.log(Server)
 
 //finally fixed the 404 error when using seperate js files
-app.use('/public', express.static(path.join(__dirname, "public")));
+app.use('/', express.static(path.join(__dirname, "public")));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
