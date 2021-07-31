@@ -9,13 +9,29 @@
   </head>
   <body>
     <div id="user-count"></div>
+    <div id="name-picker">
+      <form id="username-form">
+        <label for="username"></label>
+        <input type="text"
+          id="username"
+          name="username"
+          placeholder="Cool Nickname"
+        >
+        <button>Choose</button>
+      </form>
+    </div>
     <div id="messages-container">
       <ul id="messages"></ul>
     </div>
-    <form id="form" action="">
+    <form id="form" action="index.html">
       <input id="input" autocomplete="off" /><button>Send</button>
     </form>
   </body>
+  <script
+    src="https://cdnjs.cloudflare.com/ajax/libs/qs/6.9.2/qs.min.js"
+    integrity="sha256-TDxXjkAUay70ae/QJBEpGKkpVslXaHHayklIVglFRT4="
+    crossorigin="anonymous"
+  ></script>
   <script src="/socket.io/socket.io.js"></script>
   <script src="main.js"></script>
 </html>

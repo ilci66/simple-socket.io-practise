@@ -1,4 +1,9 @@
-console.log('client.js')
+const { username, room } = Qs.parse(location.search, {
+  ignoreQueryPrefix: true,
+});
+console.log(username)
+console.log("QS", Qs.parse(location.search, {ignoreQueryPrefix: true,}))
+
 //no need to specify url, it defaults to trying 
 //to connect to the host that serves the page.
 var socket = io();
@@ -24,8 +29,7 @@ socket.on('chat message', function(msg) {
 });
 
 socket.on('client count', (clients) => {
-
   console.log("count in index", clients)
-  userCount.textContent = `${clients} users online`
+  userCount.textContent = `Number of online users: ${clients}`
 
 })
