@@ -30,17 +30,27 @@ app.get('/', (req, res) => {
 //   socket.broadcast.emit('hi');
 // });
 
+var clients = 0
 io.on('connection', (socket) => {
-  console.log('a user connected');
+  clients++;
+  console.log('a user connected, clients: ',  clients);
+
+  socket.on('disconnect', () => {
+    clients--;
+    console.log('a user disconnected, clients ',  clients);
+    io.emit('client count', clients)
+  });
+
+  io.emit('client count', clients)
+
   socket.on('chat message', (msg) => {
     // console.log('reached the emitted message by user: ' + msg)
     
     // send the message to everyone, including the sender.
     io.emit('chat message', msg);
-    
   });
 });
 
 server.listen(3000, () => {
-  console.log('listening on :3000');
+  console.log('listening on: 3000');
 });
