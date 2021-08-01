@@ -24,6 +24,7 @@ app.get('/', (req, res) => {
 // });
 
 var clients = 0
+var users = {}
 var pickedUsername = "Anonymous"
 
 io.on('connection', (socket) => {
@@ -40,16 +41,15 @@ io.on('connection', (socket) => {
   io.emit('client count', clients)
 
   socket.on('username chosen', (username) => {
-    let user = { id: socket.id, username}
-    pickedUsername = username
-    socket.broadcast.emit('user joined', `${user.username} joined the chat`)
+    users[socket.id] = username
+    socket.broadcast.emit('user joined', `${users[socket.id]} joined the chat`)
   });
 
   socket.on('chat message', (msg) => {
-    var formattedMsg = `${pickedUsername}: ${msg}`
+    if(!users[socket.id]) users[socket.id] = "Unknown"
+    var formattedMsg = `${users[socket.id]}: ${msg}`
     io.emit('chat message', formattedMsg);
   });
-
 
 });
 
