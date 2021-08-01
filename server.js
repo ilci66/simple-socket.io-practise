@@ -8,23 +8,12 @@ const io = new Server(server);
 
 console.log(Server)
 
-//finally fixed the 404 error when using seperate js files
 app.use('/', express.static(path.join(__dirname, "public")));
 
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/public/index.html');
 });
 
-// io.on('connection', (socket) => {
-//   console.log('a user connected');
-// });
-
-// io.on('connection', (socket) => {
-//   console.log('a user connected');
-//   socket.on('disconnect', () => {
-//     console.log('user disconnected');
-//   });
-// });
 
 // If you want to send a message to everyone 
 //except for a certain emitting socket, 
@@ -35,7 +24,10 @@ app.get('/', (req, res) => {
 // });
 
 var clients = 0
+var pickedUsername = "Anonymous"
+
 io.on('connection', (socket) => {
+  // console.log(socket.id)
   clients++;
   console.log('a user connected, clients: ',  clients);
 
@@ -47,12 +39,18 @@ io.on('connection', (socket) => {
 
   io.emit('client count', clients)
 
-  socket.on('chat message', (msg) => {
-    // console.log('reached the emitted message by user: ' + msg)
-    
-    // send the message to everyone, including the sender.
-    io.emit('chat message', msg);
+  socket.on('username chosen', (username) => {
+    let user = { id: socket.id, username}
+    pickedUsername = username
+    socket.broadcast.emit('user joined', `${user.username} joined the chat`)
   });
+
+  socket.on('chat message', (msg) => {
+    var formattedMsg = `${pickedUsername}: ${msg}`
+    io.emit('chat message', formattedMsg);
+  });
+
+
 });
 
 server.listen(3000, () => {
