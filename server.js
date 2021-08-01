@@ -36,6 +36,7 @@ io.on('connection', (socket) => {
     clients--;
     console.log('a user disconnected, clients ',  clients);
     io.emit('client count', clients)
+    socket.broadcast.emit('user disconnected', users[socket.id])
   });
 
   io.emit('client count', clients)

@@ -25,11 +25,32 @@ body {
 #input:focus { 
   outline: none; 
 }
-#form > button { 
+#name-picker {
+  display:flex;
+  align-items:center;
+  justify-content: center;
+}
+#username-form {
+ display:flex;
+ margin: 0.5rem;
+ height: 3rem; 
+ box-sizing: border-box; 
+}
+#username-form > button {
   background: #333; 
   border: none; 
   padding: 0 1rem;
   margin: 0.25rem; 
+  border-radius: 3px; 
+  outline: none; 
+  color: #fff; 
+}
+}
+#form > button { 
+  background: #333; 
+  border: none; 
+  padding: 0 1rem;
+  margin: 0.7rem; 
   border-radius: 3px; 
   outline: none; 
   color: #fff; 
